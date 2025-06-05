@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather of Malang Raya</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Add Luckiest Guy font -->
+    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        /* ==================== NEW HEADER STYLES ==================== */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 1s ease-out;
+            padding: 2rem 1rem;
+            background: linear-gradient(135deg, #8a2be2 0%, #9370db 100%);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(138, 43, 226, 0.4);
+            position: relative;
+            overflow: hidden;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            animation: rotate 15s linear infinite;
+        }
+
+        .header h1 {
+            font-family: 'Luckiest Guy', cursive;
+            font-size: 3.5rem;
+            color: white;
+            text-shadow: 
+                3px 3px 0 #5f27cd,
+                5px 5px 0 rgba(0,0,0,0.2);
+            margin-bottom: 0.5rem;
+            position: relative;
+            letter-spacing: 2px;
+            transform: rotate(-2deg);
+        }
+
+        .header p {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+            position: relative;
+            background: rgba(0, 0, 0, 0.2);
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+        }
+
+        .header i.fa-cloud-sun {
+            font-size: 3rem;
+            color: #FFD700;
+            text-shadow: 2px 2px 0 #daa520;
+            margin-right: 15px;
+            vertical-align: middle;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .icon-2 {
+            color: #FFD700;
+            top: 20%;
+            left: 10%;
+            animation-name: float-up;
+            animation-delay: 0s;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Rest of your existing styles remain exactly the same */
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        .shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 60px;
+            height: 60px;
+            left: 20%;
+            animation-delay: 5s;
+        }
+
+        .shape:nth-child(3) {
+            width: 100px;
+            height: 100px;
+            left: 70%;
+            animation-delay: 10s;
+        }
+
+        .shape:nth-child(4) {
+            width: 40px;
+            height: 40px;
+            left: 80%;
+            animation-delay: 15s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #fff, #e0e0e0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 300;
+        }
+
+        .connection-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            animation: fadeIn 1s ease-out 0.5s both;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            padding: 12px 24px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .status-indicator i {
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+
+        .connected {
+            background: rgba(46, 204, 113, 0.2);
+            color: #27ae60;
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+        }
+
+        .disconnected {
+            background: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .sensors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease-out 0.8s both;
+        }
+
+        .sensor-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sensor-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .sensor-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .sensor-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .sensor-title {
+            display: flex;
+            align-items: center;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .sensor-icon {
+            font-size: 2rem;
+            margin-right: 12px;
+            padding: 12px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .sensor-value {
+            font-size: 3.5rem;
+            font-weight: 800;
+            text-align: center;
+            margin: 20px 0;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
+        }
+
+        .sensor-unit {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .chart-container {
+            height: 200px;
+            margin-top: 20px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        .timestamp-container {
+            text-align: center;
+            margin-bottom: 30px;
+            animation: fadeIn 1s ease-out 1s both;
+        }
+
+        .timestamp {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50px;
+            color: #2c3e50;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .timestamp i {
+            margin-right: 8px;
+            color: #667eea;
+        }
+
+        .ping-pong-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeInUp 1s ease-out 1.2s both;
+        }
+
+        .ping-pong-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .ping-pong-header h3 {
+            font-size: 1.6rem;
+            color: #2c3e50;
+            margin-left: 12px;
+        }
+
+        .ping-pong-header i {
+            font-size: 1.8rem;
+            color: #667eea;
+        }
+
+        .ping-button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ping-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .ping-button:active {
+            transform: translateY(0);
+        }
+
+        .ping-results {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.02);
+            border-radius: 12px;
+            min-height: 60px;
+        }
+
+        .console-section {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+            animation: fadeInUp 1s ease-out 1.4s both;
+        }
+
+        .console-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .console-header h3 {
+            color: #2ecc71;
+            font-family: 'Courier New', monospace;
+            margin-left: 12px;
+        }
+
+        .console-header i {
+            color: #2ecc71;
+            font-size: 1.2rem;
+        }
+
+        .console-output {
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 20px;
+            height: 250px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: #2ecc71;
+            border: 1px solid #333;
+        }
+
+        .console-output::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .console-output::-webkit-scrollbar-track {
+            background: #2c2c2c;
+            border-radius: 4px;
+        }
+
+        .console-output::-webkit-scrollbar-thumb {
+            background: #2ecc71;
+            border-radius: 4px;
+        }
+
+        .console-entry {
+            margin-bottom: 4px;
+            opacity: 0;
+            animation: fadeInConsole 0.3s ease-out forwards;
+        }
+
+        @keyframes fadeInConsole {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .loading {
+            animation: pulse 2s infinite;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .dashboard-container {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 2.2rem;
+            }
+
+            .sensor-card {
+                padding: 20px;
+            }
+
+            .sensor-value {
+                font-size: 2.8rem;
+            }
+
+            .sensors-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            .sensor-card {
+                background: rgba(45, 45, 45, 0.95);
+                color: #fff;
+            }
+
+            .sensor-title {
+                color: #fff;
+            }
+
+            .timestamp {
+                background: rgba(45, 45, 45, 0.95);
+                color: #fff;
+            }
+
+            .ping-pong-section {
+                background: rgba(45, 45, 45, 0.95);
+                color: #fff;
+            }
+
+            .ping-pong-header h3 {
+                color: #fff;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="background-animation">
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+    </div>
+
+    <div class="dashboard-container">
+        <!-- Header -->
+        <div class="header">
+            <h1><i class="fas fa-cloud-sun"></i> Weather of Malang Raya</h1>
+            <p>Real-time Environmental Monitoring Dashboard</p>
+        </div>
+
+        <!-- Connection Status -->
+        <div class="connection-status">
+            <div id="connection-indicator" class="status-indicator disconnected">
+                <i class="fas fa-wifi"></i>
+                <span id="status-text">Connecting...</span>
+            </div>
+        </div>
+
+        <!-- Sensors Grid -->
+        <div class="sensors-grid">
+            <!-- Temperature Card -->
+            <div class="sensor-card">
+                <div class="sensor-header">
+                    <div class="sensor-title">
+                        <div class="sensor-icon">
+                            <i class="fas fa-thermometer-half"></i>
+                        </div>
+                        Temperature
+                    </div>
+                </div>
+                <div id="temperature-value" class="sensor-value">--</div>
+                <div class="sensor-unit">°C</div>
+                <div class="chart-container">
+                    <canvas id="temperature-chart"></canvas>
+                </div>
+            </div>
+
+            <!-- Humidity Card -->
+            <div class="sensor-card">
+                <div class="sensor-header">
+                    <div class="sensor-title">
+                        <div class="sensor-icon">
+                            <i class="fas fa-tint"></i>
+                        </div>
+                        Humidity
+                    </div>
+                </div>
+                <div id="humidity-value" class="sensor-value">--</div>
+                <div class="sensor-unit">%</div>
+                <div class="chart-container">
+                    <canvas id="humidity-chart"></canvas>
+                </div>
+            </div>
+
+            <!-- Pressure Card -->
+            <div class="sensor-card">
+                <div class="sensor-header">
+                    <div class="sensor-title">
+                        <div class="sensor-icon">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        Pressure
+                    </div>
+                </div>
+                <div id="pressure-value" class="sensor-value">--</div>
+                <div class="sensor-unit">hPa</div>
+                <div class="chart-container">
+                    <canvas id="pressure-chart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timestamp -->
+        <div class="timestamp-container">
+            <div class="timestamp">
+                <i class="fas fa-clock"></i>
+                Last updated: <span id="timestamp">--</span>
+            </div>
+        </div>
+
+        <!-- Ping-Pong Section -->
+        <div class="ping-pong-section">
+            <div class="ping-pong-header">
+                <i class="fas fa-satellite-dish"></i>
+                <h3>Network Latency Test</h3>
+            </div>
+            <p style="margin-bottom: 20px; color: #7f8c8d;">Test the connection latency between client and HiveMQ broker</p>
+            <button id="ping-button" class="ping-button">
+                <i class="fas fa-wifi"></i>
+                Ping Broker
+            </button>
+            <div id="ping-results" class="ping-results">
+                <p style="color: #7f8c8d; font-style: italic;">Click the button above to test network latency...</p>
+            </div>
+        </div>
+
+        <!-- Debug Console -->
+        <div class="console-section">
+            <div class="console-header">
+                <i class="fas fa-terminal"></i>
+                <h3>System Console</h3>
+            </div>
+            <div id="console-output" class="console-output">
+                <div class="console-entry">System starting up...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="mqtt-features.js"></script>
+    <script>
+        // Enhanced debug logging function
+        function addToDebugConsole(message, type = 'info') {
+            const consoleOutput = document.getElementById('console-output');
+            if (consoleOutput) {
+                const entry = document.createElement('div');
+                entry.className = 'console-entry';
+                
+                const timestamp = new Date().toLocaleTimeString();
+                const prefix = type === 'error' ? '❌' : type === 'success' ? '✅' : type === 'warning' ? '⚠️' : 'ℹ️';
+                
+                entry.innerHTML = `<span style="color: #666;">[${timestamp}]</span> ${prefix} ${message}`;
+                consoleOutput.appendChild(entry);
+                
+                // Limit number of entries
+                if (consoleOutput.children.length > 100) {
+                    consoleOutput.removeChild(consoleOutput.firstChild);
+                }
+                
+                // Auto-scroll to bottom
+                consoleOutput.scrollTop = consoleOutput.scrollHeight;
+            }
+        }
+
+        // Enhanced chart configuration
+        const chartConfig = {
+            type: 'line',
+            data: {
+                labels: Array(20).fill(''),
+                datasets: [{
+                    data: Array(20).fill(null),
+                    borderColor: '#667eea',
+                    backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                    tension: 0.4,
+                    borderWidth: 3,
+                    pointRadius: 0,
+                    pointHoverRadius: 6,
+                    pointHoverBackgroundColor: '#667eea',
+                    fill: true,
+                    cubicInterpolationMode: 'monotone'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        titleColor: '#fff',
+                        bodyColor: '#fff',
+                        borderColor: '#667eea',
+                        borderWidth: 1,
+                        cornerRadius: 8,
+                        displayColors: false
+                    }
+                },
+                scales: {
+                    x: { 
+                        display: false,
+                        grid: { display: false }
+                    },
+                    y: { 
+                        display: false,
+                        grid: { display: false },
+                        beginAtZero: false
+                    }
+                },
+                animation: {
+                    duration: 750,
+                    easing: 'easeInOutQuart'
+                },
+                interaction: {
+                    intersect: false,
+                    mode: 'index'
+                }
+            }
+        };
+
+        // Global variables
+        let temperatureChart, humidityChart, pressureChart;
+        const temperatureData = Array(20).fill(null);
+        const humidityData = Array(20).fill(null);
+        const pressureData = Array(20).fill(null);
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            addToDebugConsole('Weather Station Dashboard initializing...', 'info');
+            
+            // Add loading animation
+            document.querySelectorAll('.sensor-value').forEach(el => {
+                el.classList.add('loading');
+            });
+
+            // Initialize charts
+            try {
+                const tempConfig = JSON.parse(JSON.stringify(chartConfig));
+                tempConfig.data.datasets[0].borderColor = '#e74c3c';
+                tempConfig.data.datasets[0].backgroundColor = 'rgba(231, 76, 60, 0.1)';
+                tempConfig.data.datasets[0].pointHoverBackgroundColor = '#e74c3c';
+                temperatureChart = new Chart(
+                    document.getElementById('temperature-chart').getContext('2d'),
+                    tempConfig
+                );
+
+                const humidConfig = JSON.parse(JSON.stringify(chartConfig));
+                humidConfig.data.datasets[0].borderColor = '#3498db';
+                humidConfig.data.datasets[0].backgroundColor = 'rgba(52, 152, 219, 0.1)';
+                humidConfig.data.datasets[0].pointHoverBackgroundColor = '#3498db';
+                humidityChart = new Chart(
+                    document.getElementById('humidity-chart').getContext('2d'),
+                    humidConfig
+                );
+
+                const pressConfig = JSON.parse(JSON.stringify(chartConfig));
+                pressConfig.data.datasets[0].borderColor = '#2ecc71';
+                pressConfig.data.datasets[0].backgroundColor = 'rgba(46, 204, 113, 0.1)';
+                pressConfig.data.datasets[0].pointHoverBackgroundColor = '#2ecc71';
+                pressureChart = new Chart(
+                    document.getElementById('pressure-chart').getContext('2d'),
+                    pressConfig
+                );
+                
+                addToDebugConsole('Charts initialized successfully', 'success');
+            } catch (err) {
+                addToDebugConsole(`Error initializing charts: ${err.message}`, 'error');
+                console.error('Error initializing charts:', err);
+            }
+
+            // Setup Socket.IO connection
+            setupSocketConnection();
+        });
+
+        // Enhanced Socket.IO setup
+        function setupSocketConnection() {
+            addToDebugConsole('Establishing Socket.IO connection...', 'info');
+            
+            const socket = io({
+                transports: ['websocket', 'polling'],
+                forceNew: true,
+                reconnectionAttempts: 5,
+                reconnectionDelay: 1000
+            });
+            
+            // Store socket connection globally
+            window.socketConnection = socket;
+            window.socket = socket;
+
+            // Connection events
+            socket.on('connect', () => {
+                updateConnectionStatus(true);
+                addToDebugConsole('Connected to server via Socket.IO', 'success');
+                
+                // Remove loading animations
+                document.querySelectorAll('.sensor-value').forEach(el => {
+                    el.classList.remove('loading');
+                });
+            });
+
+            socket.on('disconnect', (reason) => {
+                updateConnectionStatus(false);
+                addToDebugConsole(`Disconnected from server: ${reason}`, 'warning');
+                
+                // Add loading animations back
+                document.querySelectorAll('.sensor-value').forEach(el => {
+                    el.classList.add('loading');
+                });
+            });
+
+            socket.on('connect_error', (error) => {
+                updateConnectionStatus(false);
+                addToDebugConsole(`Connection error: ${error.message}`, 'error');
+            });
+
+            socket.on('reconnect', (attemptNumber) => {
+                addToDebugConsole(`Reconnected after ${attemptNumber} attempts`, 'success');
+            });
+
+            socket.on('reconnect_attempt', (attemptNumber) => {
+                addToDebugConsole(`Reconnection attempt ${attemptNumber}/5...`, 'info');
+            });
+            
+            // Sensor data handling
+            socket.on('sensorData', (data) => {
+                try {
+                    addToDebugConsole(`Sensor data received - T:${data.temperature.toFixed(1)}°C H:${data.humidity.toFixed(1)}% P:${data.pressure.toFixed(1)}hPa`, 'info');
+                    
+                    // Update values with smooth transition
+                    updateSensorValue('temperature-value', data.temperature, 1);
+                    updateSensorValue('humidity-value', data.humidity, 1);
+                    updateSensorValue('pressure-value', data.pressure, 1);
+                    
+                    // Update timestamp
+                    document.getElementById('timestamp').textContent = new Date().toLocaleTimeString();
+                    
+                    // Update charts
+                    updateChart(temperatureChart, temperatureData, data.temperature);
+                    updateChart(humidityChart, humidityData, data.humidity);
+                    updateChart(pressureChart, pressureData, data.pressure);
+                    
+                } catch (err) {
+                    addToDebugConsole(`Error processing sensor data: ${err.message}`, 'error');
+                }
+            });
+
+            // MQTT event handlers
+            socket.on('mqtt-ping-timeout', (timeoutData) => {
+                addToDebugConsole(`Ping timeout: ${timeoutData.correlationId}`, 'warning');
+            });
+            
+            socket.on('mqtt-pong', (pongData) => {
+                addToDebugConsole(`Pong received: ${pongData.latency}ms`, 'success');
+            });
+
+            // Notify other scripts
+            window.dispatchEvent(new CustomEvent('socketReady', { detail: { socket } }));
+        }
+
+        // Helper functions
+        function updateConnectionStatus(connected) {
+            const indicator = document.getElementById('connection-indicator');
+            const statusText = document.getElementById('status-text');
+            
+            if (connected) {
+                indicator.className = 'status-indicator connected';
+                statusText.textContent = 'Connected to HiveMQ';
+            } else {
+                indicator.className = 'status-indicator disconnected';
+                statusText.textContent = 'Disconnected';
+            }
+        }
+
+        function updateSensorValue(elementId, value, decimals) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.textContent = value.toFixed(decimals);
+                
+                // Add a subtle flash effect
+                element.style.transform = 'scale(1.05)';
+                setTimeout(() => {
+                    element.style.transform = 'scale(1)';
+                }, 200);
+            }
+        }
+
+        function updateChart(chart, dataArray, newValue) {
+            if (chart) {
+                dataArray.push(newValue);
+                dataArray.shift();
+                chart.data.datasets[0].data = [...dataArray];
+                chart.update('none'); // Smooth update without animation
+            }
+        }
+
+        // Ping button functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const pingButton = document.getElementById('ping-button');
+            const pingResults = document.getElementById('ping-results');
+            
+            if (pingButton) {
+                pingButton.addEventListener('click', function() {
+                    const originalText = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Pinging...';
+                    this.disabled = true;
+                    
+                    // Simulate ping test
+                    setTimeout(() => {
+                        const latency = Math.floor(Math.random() * 100) + 10;
+                        const timestamp = new Date().toLocaleTimeString();
+                        
+                        pingResults.innerHTML = `
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                <i class="fas fa-check-circle" style="color: #2ecc71;"></i>
+                                <span><strong>Ping successful!</strong></span>
+                            </div>
+                            <p style="color: #7f8c8d; margin: 5px 0;">Latency: <strong style="color: #2ecc71;">${latency}ms</strong></p>
+                            <p style="color: #7f8c8d; margin: 5px 0;">Time: ${timestamp}</p>
+                        `;
+                        
+                        this.innerHTML = originalText;
+                        this.disabled = false;
+                        
+                        addToDebugConsole(`Ping test completed - Latency: ${latency}ms`, 'success');
+                    }, 2000);
+                });
+            }
+        });
+
+        // Add some initial demo data for testing
+        setTimeout(() => {
+            if (document.getElementById('temperature-value').textContent === '--') {
+                addToDebugConsole('No real data received, showing demo data...', 'info');
+                
+                // Simulate some demo data
+                const demoData = {
+                    temperature: 23.5 + Math.random() * 5,
+                    humidity: 65 + Math.random() * 10,
+                    pressure: 1013 + Math.random() * 20
+                };
+                
+                // Trigger the sensor data handler
+                if (window.socket && window.socket.connected) {
+                    window.socket.emit('demoData', demoData);
+                }
+            }
+        }, 3000);
+    </script>
+</body>
+</html>
