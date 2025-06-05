@@ -18,7 +18,7 @@ Weather Station adalah proyek IoT berbasis Node.js dan TypeScript yang memantau 
 ### 1. **Clone repository**
 
 ```bash
-git clone <URL_REPO_KAMU>
+git clone 
 cd weather-station
 ```
 
